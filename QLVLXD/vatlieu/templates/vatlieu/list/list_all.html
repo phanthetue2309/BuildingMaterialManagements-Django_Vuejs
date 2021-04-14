@@ -1,0 +1,10 @@
+{% extends "vatlieu/base.html" %}
+{% block content %}
+    <a href="{% url 'list-provider' %} "> List Provider</a> <br>
+    <a href="{% url 'list-product' %} "> List Product</a> <br>
+    {% if user.is_authenticated %}
+    <a href="{% url 'list-customer' %} "> List Customer</a> <br>
+    <a href="{% url 'list-input-bill' %} "> List Input Bill</a> <br>
+    <a href="{% url 'list-output-bill' %} "> List Output Bill</a> <br>
+    {% endif %}
+{% endblock content %}

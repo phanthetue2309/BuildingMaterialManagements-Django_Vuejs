@@ -1,0 +1,46 @@
+{% extends "vatlieu/base.html" %}
+{% load has_group %}
+{% block content %}
+
+<!--   Check if staff == user then show Update and Delete -->
+
+<h3>Product Information</h3>
+<table border="1" style="width:30%" content="Chi Tiết Hóa Đơn ">
+    <tr>
+        <th>Product</th>
+        <td>{{ object.name }}</td>
+    </tr>
+    <tr>
+        <th>Type</th>
+        <td>{{ object.type_product.name }} </td>
+    </tr>
+     <tr>
+        <th>Calculation Unit</th>
+        <td>{{ object.calculationUnit.name }} </td>
+    </tr>
+     {% if user.is_authenticated and request.user|has_group:"admin" %}
+    <tr>
+        <th>Unit Cost</th>
+        <td>{{ object.unit_cost }} VND</td>
+    </tr>
+
+       {% endif %}
+    <tr>
+        <th>Selling Cost</th>
+        <td>{{ object.selling_price }} VND</td>
+    </tr>   
+    <tr>
+        <th>Origin</th>
+        <td>{{ object.origin }}</td>
+    </tr>
+
+    
+</table>
+{% if user.is_authenticated and request.user|has_group:"admin" %}
+
+<div>
+    <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'product-update' object.id %}">Update</a>
+    <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'product-delete' object.id %}">Delete</a>
+</div>
+{% endif %}
+{% endblock content %}

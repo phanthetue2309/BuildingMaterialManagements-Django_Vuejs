@@ -1,0 +1,17 @@
+[
+    {
+        "Type_product" : 2,
+        "Name" : "Đá 1×2 đen",
+        "Unit_cost" : 250000,
+        "Selling_price" : 270000,
+        "Origin" : "Việt Nam"
+
+    },
+    {
+        "Type_product" : 2,
+        "Name" : "Đá 1×2 xanh",
+        "Unit_cost" : 350000,
+        "Selling_price" : 380000,
+        "Origin" : "Việt Nam"
+    }
+]

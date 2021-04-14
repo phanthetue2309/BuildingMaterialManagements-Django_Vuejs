@@ -1,0 +1,62 @@
+{% extends "vatlieu/base.html" %}
+{% block content %}
+<h3>Customer Information</h3>
+<table border = "1" style="width:30%" content="Chi Tiết Hóa Đơn ">
+     <tr>
+        <th>Customer</th>
+        <td>{{output_bill.customer}}</td>
+    </tr>
+    <tr>
+        <th>Staff</th>
+        <td>{{output_bill.staff.username}}</td>
+    </tr>
+    <tr>
+        <th>Input Date</th>
+        <td>{{output_bill.output_date}}</td>
+    </tr>
+    <tr>
+        <th>Status</th>
+        <td>{{status}}</td>
+    </tr>
+</table>
+<!--   Check if staff == user then show Update and Delete -->
+        {% if output_bill.staff == user %}
+          <div>
+            <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'output-bill-update' output_bill.id %}">Update</a>
+            <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'output-bill-delete' output_bill.id %}">Delete</a>
+          </div>
+        {% endif %}
+
+<br><h4>Detail Output Bill Information</h4>
+<table border = "1" style="width:100%" content="Chi Tiết Hóa Đơn ">
+        <tr>
+            <th><center>ID Output Bill</center></th>
+            <th><center>Product</center></th>
+            <th><center>Unit Cost</center></th>
+            <th><center>Count</center></th>
+            <th><center>Price (VND) </center></th>
+        </tr>
+
+       {% for detail in output_bills_detail %}
+
+        <tr><td><center>{{detail.output_bill.id}}</center></td>
+            <td><center>{{detail.warehouse.product.name}}</center></td>
+            <td><center>{{detail.warehouse.product.selling_price}}</center></td>
+            <td><center>{{detail.count}}</center></td>
+            <td><center>{{detail.price}} VND</center></td>
+            <td><center>
+                <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'update-detail-output-bill' detail.id %}">Update</a>
+                <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'delete-detail-output-bill' detail.id %}">Delete</a>
+                </center>
+            </td>
+        </tr>
+    {% endfor %}
+        <tr>
+            <th style="visibility:hidden;"></th>
+            <th style="visibility:hidden;"></th>
+<!--            show sum of money -->
+            <th><center>Total : </center></th>
+            <th><center>{{sum}}</center></th>
+        </tr>
+</table>
+{% endblock content %}

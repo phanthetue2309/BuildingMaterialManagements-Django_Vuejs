@@ -1,0 +1,51 @@
+{% extends "vatlieu/base.html" %}
+{% block content %}
+<h4>Danh sách sản phẩm đã nhận </h4>
+<table border = "1" style="width:100%" content="Danh Sách Nhà Cung Cấp ">
+        <tr>
+            <th><center>Tên Sản Phẩm</center></th>
+            <th><center>Loại</center></th>
+            <th><center>Đơn giá sản phẩm</center></th>
+            <th><center>Số lượng  mua</center></th>
+            <th><center>Tổng tiền </center></th>
+            <th><center>Ngày mua </center></th>
+         
+        </tr>
+<!--    Code show the provider to list -->
+
+    {% for buying in shoppings %}
+<!--           remember : url make same in the urls.py -->
+        <tr>
+            <td><center> <a href="{% url 'product-detail' buying.product.id  %}">{{buying.product.name}}</a></center></td>
+            <td><center>{{buying.product.type_product.name}} </center></td>
+            <td><center>{{buying.buying_unit_cost}}</center></td>
+            <td><center>{{buying.count}}</center></td>
+            <td><center>{{buying.total_cost}}</center></td>
+            <td><center>{{buying.buy_date}}</center></td>
+         
+        </tr>
+
+    {% endfor %}
+</table> 
+    {% if is_paginated %}
+<!-- Đoạn ni là bắt đàu phân trang -->
+      {% if page_obj.has_previous %}
+        <a class="btn btn-outline-info mb-4" href="?page=1">First</a>
+        <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+      {% endif %}
+
+      {% for num in page_obj.paginator.page_range %}
+        {% if page_obj.number == num %}
+          <a class="btn btn-info mb-4" href="?page={{ num }}">{{ num }}</a>
+        {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+          <a class="btn btn-outline-info mb-4" href="?page={{ num }}">{{ num }}</a>
+        {% endif %}
+      {% endfor %}
+
+      {% if page_obj.has_next %}
+        <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.next_page_number }}">Next</a>
+        <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+      {% endif %}
+
+    {% endif %}
+{% endblock content %}

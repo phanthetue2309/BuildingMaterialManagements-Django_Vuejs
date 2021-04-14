@@ -1,0 +1,51 @@
+{% extends "vatlieu/base.html" %}
+{% block content %}
+<table border = "1" style="width:100%" content="Danh Sách Nhà Cung Cấp ">
+        <tr>
+            <th><center>Tên Sản Phẩm</center></th>
+            <th><center>Loại</center></th>
+            <th><center>Đơn vị tính </center></th>
+            <th><center>Giá Tiền</center></th>
+            <th><center>Số lượng muốn mua</center></th>
+            <th><center>Lượng hàng còn lại </center></th>
+            <th><center>Chọn</center></th>
+        </tr>
+<!--    Code show the provider to list -->
+    {% for warehouse in warehouses %}
+<!--           remember : url make same in the urls.py -->
+        <tr>
+            <form action="buy_products" method="POST">  {% csrf_token %}
+            <td><center> <a href="{% url 'product-detail' warehouse.product.id  %}"><h5>{{warehouse.product.name}}</h5></a></center></td>
+            <td><center>{{warehouse.product.type_product.name}} </center></td>
+            <td><center>{{warehouse.product.calculationUnit}}</center></td>
+            <td><center>{{warehouse.product.selling_price}}</center></td>
+            <td><center><input type="number" name="quantity" min="1" max="{{ warehouse.count }}" value=1></center></td>
+            <td><center>  {{warehouse.count}}  </center></td>
+            <input type="hidden" id="id_product" name="id_product" value="{{warehouse.product.id}}">
+            <td><center><button class="btn btn-danger btn-sm mt-1 mb-1" type="submit">Buy</button></center></td>
+            </form>
+        </tr>
+
+    {% endfor %}
+</table>
+    {% if is_paginated %}
+<!-- Đoạn ni là bắt đàu phân trang -->
+      {% if page_obj.has_previous %}
+        <a class="btn btn-outline-info mb-4" href="?page=1">First</a>
+        <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+      {% endif %}
+
+      {% for num in page_obj.paginator.page_range %}
+        {% if page_obj.number == num %}
+          <a class="btn btn-info mb-4" href="?page={{ num }}">{{ num }}</a>
+        {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+          <a class="btn btn-outline-info mb-4" href="?page={{ num }}">{{ num }}</a>
+        {% endif %}
+      {% endfor %}
+
+      {% if page_obj.has_next %}
+        <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.next_page_number }}">Next</a>
+        <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+      {% endif %}
+    {% endif %}
+{% endblock content %}

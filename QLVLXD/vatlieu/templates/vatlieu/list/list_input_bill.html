@@ -1,0 +1,50 @@
+{% extends "vatlieu/base.html" %}
+{% block content %}
+<h4> Danh Sách Hóa Đơn Nhập </h4>
+<table border = "1" style="width:100%" content="Danh Sách Hóa Đơn">
+        <tr>
+            <th>Mã Hóa Đơn</th>
+            <th>Nhà Cung Cấp</th>
+            <th>Tên Nhân Viên</th>
+            <th>Ngày Nhập Hóa Đơn</th>
+        </tr>
+<!--    Code show the bill to homepage -->
+    {% for bill in input_bills %}
+
+
+<!--           remember : url make same in the urls.py -->
+        <tr><td><center> <a  href="{% url 'input-bill-detail' bill.id  %}"><h5>{{bill.id}}</h5></a></center></td>
+<!--           href to input bill detail  -->
+            <td><center>{{bill.provider.name}} </center></td>
+            <td><center>
+                <a  href="{% url 'staff-input-bill' bill.staff.username  %}"><h5>{{ bill.staff.username }}</h5></a>
+<!--           href to staff bill input   -->
+                </center></td>
+            <td><center>{{bill.input_date}}</center></td>
+
+        </tr>
+    {% endfor %}
+       </table>
+
+    {% if is_paginated %}
+<!-- Đoạn ni là bắt đàu phân trang -->
+      {% if page_obj.has_previous %}
+        <a class="btn btn-outline-info mb-4" href="?page=1">First</a>
+        <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+      {% endif %}
+
+      {% for num in page_obj.paginator.page_range %}
+        {% if page_obj.number == num %}
+          <a class="btn btn-info mb-4" href="?page={{ num }}">{{ num }}</a>
+        {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+          <a class="btn btn-outline-info mb-4" href="?page={{ num }}">{{ num }}</a>
+        {% endif %}
+      {% endfor %}
+
+      {% if page_obj.has_next %}
+        <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.next_page_number }}">Next</a>
+        <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+      {% endif %}
+
+    {% endif %}
+{% endblock content %}

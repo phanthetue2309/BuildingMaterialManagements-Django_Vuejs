@@ -1,0 +1,24 @@
+{% extends 'vatlieu/base.html' %}
+{% block content %}
+<p>{{count}} of Products containing " {{query_string}} "</p>
+<table border = "1" style="width:100%" content="Chi Tiết Hóa Đơn ">
+    <tr>
+        <th>Name of Product</th>
+        <th>Type</th>
+        <th>Selling Price</th>
+    </tr>
+{% for product in products %}
+    <div>
+        <tr>
+        {% if user.is_authenticated %}
+        <th><a href="{% url 'product-detail' product.id %}">{{ product.name }}</h2></a></th>
+        {% else %}
+            <td>{{ product.name }} </td>
+        {% endif %}
+            <td>{{product.type_product}}</td>
+            <td>{{product.selling_price}} VND</td>
+        </tr>
+    </div>
+{% endfor %}
+</table>
+{% endblock content %}

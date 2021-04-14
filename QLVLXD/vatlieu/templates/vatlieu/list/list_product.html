@@ -1,0 +1,46 @@
+{% extends "vatlieu/base.html" %}
+{% block content %}
+<table border = "1" style="width:100%" content="Danh Sách Nhà Cung Cấp ">
+        <tr>
+            <th>Tên Sản Phẩm</th>
+            <th>Loại</th>
+            <th>Đơn vị tính </th>
+            <th>Giá bán </th>
+            
+        </tr>
+<!--    Code show the provider to list -->
+    {% for product in products %}
+<!--           remember : url make same in the urls.py -->
+        <tr>
+            <td> <a  href="{% url 'product-detail' product.id  %}">{{product.name}}</a></td>
+<!--           href to input bill detail  -->
+            <td><a  href="{% url 'product-list-type' product.type_product.name  %}">{{product.type_product.name}}</a> </td>  
+            <td>{{product.calculationUnit}} </td>
+            <td>{{product.selling_price}}</td>
+
+        </tr>
+
+    {% endfor %}
+</table>
+    {% if is_paginated %}
+<!-- Đoạn ni là bắt đàu phân trang -->
+      {% if page_obj.has_previous %}
+        <a class="btn btn-outline-info mb-4" href="?page=1">First</a>
+        <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+      {% endif %}
+
+      {% for num in page_obj.paginator.page_range %}
+        {% if page_obj.number == num %}
+          <a class="btn btn-info mb-4" href="?page={{ num }}">{{ num }}</a>
+        {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+          <a class="btn btn-outline-info mb-4" href="?page={{ num }}">{{ num }}</a>
+        {% endif %}
+      {% endfor %}
+
+      {% if page_obj.has_next %}
+        <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.next_page_number }}">Next</a>
+        <a class="btn btn-outline-info mb-4" href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+      {% endif %}
+
+    {% endif %}
+{% endblock content %}

@@ -1,0 +1,17 @@
+{% extends "vatlieu/base.html" %}
+{% block content %}
+
+
+<!--   Check if staff == user then show Update and Delete -->
+
+        Khách Hàng : {{ object.name }} <br>
+        Địa chỉ : {{ object.address }}  <br>
+        Điện thoại : {{ object.phone_number }}
+
+        {% if user.is_authenticated %}
+          <div>
+            <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'customer-update' object.id %}">Update</a>
+            <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'customer-delete' object.id %}">Delete</a>
+          </div>
+        {% endif %}
+{% endblock content %}

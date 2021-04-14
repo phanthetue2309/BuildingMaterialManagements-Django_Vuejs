@@ -1,0 +1,28 @@
+{% extends "vatlieu/base.html" %}
+{% load has_group %}
+{% block content %}
+
+
+<!--   Check if staff == user then show Update and Delete -->
+<h3>Provider Information</h3>
+<table border = "1" style="width:30%" content="Chi Tiết Hóa Đơn ">
+    <tr>
+        <th>Provider</th>
+        <td>{{ object.name }}</td>
+    </tr>
+    <tr>
+        <th>Address</th>
+        <td>{{ object.address }}</td>
+    </tr>
+    <tr>
+        <th>Contact Number</th>
+        <td>{{ object.phone_number }}</td>
+    </tr>
+</table>
+        {% if user.is_authenticated and request.user|has_group:"admin" %}
+          <div>
+            <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'provider-update' object.id %}">Update</a>
+            <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'provider-delete' object.id %}">Delete</a>
+          </div>
+        {% endif %}
+{% endblock content %}
