@@ -138,7 +138,7 @@ class ProviderCreateView(LoginRequiredMixin, CreateView):
 
 class CustomerCreateView(LoginRequiredMixin, CreateView):
     model = Customer    
-    fields = ['name', 'address', 'phone_number']
+    fields = ['name', 'address', 'phone_number', 'discription']
     template_name = 'vatlieu/customer/customer_form.html'
     success_url = "/list/customer"
 
@@ -505,7 +505,7 @@ def buy_products(request):
     id_product = request.POST.get('id_product')
     count = request.POST.get('quantity')
     product = Product.objects.get(id=id_product)
-    shopping = Shopping( product=product, customer_account=request.user, count=count,
+    shopping = Shopping( product=product, staff=request.user, count=count,
                          total_cost=int(product.selling_price*int(count)), buying_unit_cost=int(product.selling_price))
     
     shopping.save()
@@ -531,7 +531,7 @@ class UserShopping_Buying(ListView):    # danh sách hóa đơn đặt mua
     def get_queryset(self):
         user = get_object_or_404(User, username=self.kwargs.get('username'))
         #print(user)
-        return Shopping.objects.filter(customer_account=user).filter(flag=1).order_by('-buy_date')
+        return Shopping.objects.filter(staff=user).filter(flag=1).order_by('-buy_date')
 
 
 class UserShopping_Received(ListView): # danh sách hóa đơn đã nhận hàng
@@ -543,7 +543,7 @@ class UserShopping_Received(ListView): # danh sách hóa đơn đã nhận hàng
     
     def get_queryset(self):
         user = get_object_or_404(User, username=self.kwargs.get('username'))
-        return Shopping.objects.filter(customer_account=user).filter(flag=-1).order_by('-buy_date')
+        return Shopping.objects.filter(staff=user).filter(flag=-1).order_by('-buy_date')
 
 
 def List_typeProduct(request, type_product):

@@ -11,6 +11,7 @@ class AbstractPerson(models.Model):
     name = models.CharField(max_length=45)
     address = models.CharField(max_length=45, null=True)
     phone_number = models.CharField(max_length=45, null=True)
+    discription = models.TextField(null=True)
 
     class Meta:
         abstract = True
@@ -78,17 +79,23 @@ class Warehouse(models.Model):
         ordering = ['product__type_product__name']
 
 # input
-class InputBill(models.Model):
+class Bill(models.Model) :
     STATUS = (
         (1, 'Pending'),
         (0, 'Out for delivery'),
         (-1, 'Delivered'),
     )
     id = models.AutoField(primary_key=True)
-    provider = models.ForeignKey(Provider, on_delete=models.CASCADE, related_name="input_bills")
-    staff = models.ForeignKey(User, on_delete=models.CASCADE)
-    input_date = models.DateField(_("Date"), default=datetime.today)
+    staff = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     flag = models.IntegerField(default=1, choices=STATUS)
+
+    class Meta:
+        abstract = True
+
+
+class InputBill(Bill):
+    provider = models.ForeignKey(Provider, on_delete=models.CASCADE, related_name="input_bills")
+    input_date = models.DateField(_("Date"), default=datetime.today)
 
     def __str__(self):
         return str(self.provider)
@@ -115,17 +122,9 @@ class DetailInputBill(models.Model):
 
 
 # output
-class OutputBill(models.Model):
-    STATUS = (
-        (1, 'Pending'),
-        (0, 'Out for delivery'),
-        (-1, 'Delivered'),
-    )
-    id = models.AutoField(primary_key=True)
+class OutputBill(Bill):
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE, related_name="output_bills")
-    staff = models.ForeignKey(User, on_delete=models.CASCADE)
     output_date = models.DateField(_("Date"), default=datetime.today)
-    flag = models.IntegerField(default=1, choices=STATUS)
 
     def __str__(self):
         return str(self.customer)
@@ -151,17 +150,9 @@ class DetailOutputBill(models.Model):
         return reverse('output-bill-detail', kwargs={'pk': self.output_bill.pk})
 
 
-class Shopping(models.Model):
-    STATUS = (
-        (1, 'Pending'),
-        (0, 'Out for delivery'),
-        (-1, 'Delivered'),
-    )
-    id = models.AutoField(primary_key=True)
+class Shopping(Bill):
     product = models.ForeignKey(Product, null=True, on_delete=models.SET_NULL)
     buy_date = models.DateTimeField(default=datetime.now, blank=True)
-    customer_account = models.ForeignKey(User, on_delete=models.CASCADE , null = True)
-    flag = models.IntegerField(default=1, choices=STATUS)
     count = models.IntegerField(default=1)
     total_cost = models.IntegerField(default=0, null=True)
     buying_unit_cost = models.IntegerField(default=10000, null=True)

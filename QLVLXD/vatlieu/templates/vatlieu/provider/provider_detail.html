@@ -5,7 +5,7 @@
 
 <!--   Check if staff == user then show Update and Delete -->
 <h3>Provider Information</h3>
-<table border = "1" style="width:30%" content="Chi Tiết Hóa Đơn ">
+<table border = "1" style="width:40%" content="Chi Tiết Hóa Đơn ">
     <tr>
         <th>Provider</th>
         <td>{{ object.name }}</td>
@@ -18,6 +18,7 @@
         <th>Contact Number</th>
         <td>{{ object.phone_number }}</td>
     </tr>
+    
 </table>
         {% if user.is_authenticated and request.user|has_group:"admin" %}
           <div>
