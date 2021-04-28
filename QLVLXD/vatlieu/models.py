@@ -13,20 +13,21 @@ class AbstractPerson(models.Model):
     phone_number = models.CharField(max_length=45, null=True)
     discription = models.TextField(null=True)
 
+    def __str__(self):  # show the name of customer when print
+        return self.name
+
     class Meta:
         abstract = True
 
 
 class Customer(AbstractPerson):
+    pass
 
-    def __str__(self):  # show the name of customer when print
-        return self.name
-
+    
 
 class Provider(AbstractPerson):
+    pass
 
-    def __str__(self):
-        return self.name
 
 
 class TypeProduct(models.Model):
