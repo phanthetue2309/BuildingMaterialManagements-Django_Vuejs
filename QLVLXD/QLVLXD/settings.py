@@ -24,7 +24,7 @@ SECRET_KEY = '2s%+@6&dkcyz$2qmatl$s0a0%h*0*7dc@@+%xs49r3)3qx26s2'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['192.168.1.16','localhost', '127.0.0.1']
 
 # Application definition
 
@@ -41,6 +41,10 @@ INSTALLED_APPS = [
     'social_django', # import social 
     'extra_views',  # show the extra views    # when run show error just hide this
     # 'bootstrap_datepicker_plus',    # show the date picker
+    'rest_framework',
+    'rest_framework_simplejwt.token_blacklist',
+    'corsheaders',
+    'drf_yasg',
 ]
 
 MIDDLEWARE = [

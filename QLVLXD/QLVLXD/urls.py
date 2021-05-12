@@ -19,6 +19,24 @@ from django.contrib.auth import views as auth_views
 from django.conf import settings
 from django.conf.urls.static import static
 from Users import views as user_views
+from rest_framework import permissions
+from drf_yasg.views import get_schema_view
+from drf_yasg import openapi
+
+
+# tạo view cho API 
+schema_view = get_schema_view(
+    openapi.Info(
+        title="BUILDING MATERIALS",
+        default_version='v1',
+        description="Test API",
+        terms_of_service="",
+        contact=openapi.Contact(email="love01052309@gmail.com"),
+        license=openapi.License(name="Test License"),
+    ),
+    public=True,
+    permission_classes=(permissions.IsAdminUser,),
+)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -41,6 +59,15 @@ urlpatterns = [
     path('password-reset-complete/', auth_views.PasswordResetCompleteView.as_view(
         template_name='Users/password_reset_complete.html'), name='password_reset_complete'),
     path('login_facebook/', include('social_django.urls', namespace='social')),  # <-- here # can be used when have upload to website
+
+    # show all API 
+    path('api/', schema_view.with_ui('swagger',
+                                 cache_timeout=0), name='schema-swagger-ui'),
+
+    path('api/api.json/', schema_view.without_ui(cache_timeout=0),
+         name='schema-swagger-ui'),
+    path('redoc/', schema_view.with_ui('redoc',
+                                       cache_timeout=0), name='schema-redoc'),
 ]
 
 if settings.DEBUG:

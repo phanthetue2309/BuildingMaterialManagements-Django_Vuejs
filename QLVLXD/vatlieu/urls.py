@@ -1,6 +1,7 @@
 from django.urls import path
 from .views import *
 from . import views
+from . import views_api 
 
 # mô hình di chuyển của web blog -> templates -> blog -> template.html
 urlpatterns = [
@@ -65,5 +66,9 @@ urlpatterns = [
     path('customer/received/<str:username>', UserShopping_Received.as_view(), name="customer-received"),
     # warehouse
     path('warehouse/', WarehouseListView.as_view(), name='warehouse'),
-    
+
+    # api riêng cho từng cái 
+    path('api/customer/', views_api.CustomerListAPIView.as_view(), name="customers-api"), 
+    path('api/customer/<int:id>', views_api.CustomerAPIView.as_view(), name="customer-api"),
+
 ]
