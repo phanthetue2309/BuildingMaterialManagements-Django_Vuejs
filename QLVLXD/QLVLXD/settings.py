@@ -40,7 +40,6 @@ INSTALLED_APPS = [
     'crispy_forms',
     'social_django', # import social 
     'extra_views',  # show the extra views    # when run show error just hide this
-    # 'bootstrap_datepicker_plus',    # show the date picker
     'rest_framework',
     'rest_framework_simplejwt.token_blacklist',
     'corsheaders',
