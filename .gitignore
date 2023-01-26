@@ -1,0 +1,125 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Packaging files:
+*.egg*
+*.lock
+*.tmp
+# Sphinx docs:
+build
+
+# SQLite3 database files:
+*.db
+*.sqlite3
+*.sqlite
+
+# Logs:
+*.log
+*.prof
+*-log-*.txt
+
+# Environment variables
+local.env
+config.env
+
+# Django stuff:
+*.mo
+*.pot
+
+# Eclipse
+.project
+.pydevproject
+.settings
+
+# Linux Editors
+*~
+\#*\#
+/.emacs.desktop
+/.emacs.desktop.lock
+.elc
+auto-save-list
+tramp
+.\#*
+*.swp
+*.swo
+
+# Rope
+.ropeproject
+
+# Mac
+.DS_Store
+._*
+
+# Windows
+Thumbs.db
+Desktop.ini
+
+#virtualenv
+bin
+lib
+!/src/templates/emails/builder/lib
+local
+include
+
+# Project settings
+./site/
+/src/media/*
+/env/
+/nbproject/
+.buildpath
+.project
+/.settings/
+/.idea
+/lc/nbproject/private
+test_ads.py
+/src/videos/*
+/src/mms/*
+*node_modules*
+package-lock.json
+/src/templates/emails/builder/tmpl/rendered
+*sent_emails*
+/src/cache/*
+*.sh
+/src/test.py
+/src/script.py
+/src/script/*
+config.env
+pyvenv.cfg
+/src/docs
+/src/coverage
+/src/tdd
+.coverage
+*coverage.*
+*junit*
+!/src/ai_nlp/stanford/deploy.sh
+!/.github/actions/check_flake8/entrypoint.sh
+/src/ai_api/fixtures/download/s3/*
+!/src/ai_api/fixtures/download/s3/*.json
+/src/wd_jobs/*.json
+.isort.cfg
+!poetry.lock
+
+#visualcode
+.vscode
+.python-version
+*uiframe_url.py
+s3_presign.txt
+/.mypy_cache/
+
+# unitest
+/src/output.json
+/src/pytest_html_report.html
+/src/archive/*
+/src/ai_admin/tmp/*
+/src/gunicorn_conf.py
+/src/gunicorn_settings.py
+/src/gunicorn.conf.py
+/src/gunicorn_v2.conf.py
+/src/local_test/*
+/venv310/
